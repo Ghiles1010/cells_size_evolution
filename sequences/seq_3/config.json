@@ -1,0 +1,12 @@
+{
+	"pixel_size" : {
+		"value" : 0.625,
+		"unit" : "um"
+	},
+
+	"time" : {
+		"start": 0,
+		"step" : 10
+	}
+	
+}
