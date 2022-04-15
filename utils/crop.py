@@ -32,14 +32,16 @@ def crop_image_gui(image):
     cv2.namedWindow("image")
     cv2.setMouseCallback("image", mouse_crop)
 
-    while cv2.getWindowProperty('image', 0) >= 0:
+    while True:
         img_cpy = image.copy()
         if not cropping:
             cv2.imshow("image", image)
         elif cropping:
             cv2.rectangle(img_cpy, (x_start, y_start), (x_end, y_end), (0, 255, 0), 1)
             cv2.imshow("image", img_cpy)
-        cv2.waitKey(1)
+
+        if cv2.waitKey(5) & 0xFF == 27:
+            break
 
     cv2.destroyWindow('image')
     cv2.destroyWindow('Cropped')
