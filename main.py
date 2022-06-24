@@ -24,18 +24,23 @@ def get_diameter(img):
 	HSV_LOW = np.array([0, 0, 193])
 	HSV_HIGH = np.array([179, 255, 255])
 
-	horizontal_center_line = img[int(img.shape[0]/2), :, :]
+	nb_pixels = []
 
-	horizontal_center_line = np.expand_dims(horizontal_center_line, axis = 0)
-	horizontal_center_line = cv2.cvtColor(horizontal_center_line, cv2.COLOR_BGR2HSV)
-	horizontal_center_line = cv2.inRange(horizontal_center_line, HSV_LOW, HSV_HIGH)
-	horizontal_center_line = cv2.erode(horizontal_center_line, None, iterations=1)
-	horizontal_center_line = cv2.dilate(horizontal_center_line, None, iterations=1)
+	for l in range(img.shape[0]):
 
-	# number non masked pixels
-	non_masked_pixels = np.count_nonzero(horizontal_center_line)
+		line = img[l, :, :]
 
-	return non_masked_pixels
+		line = np.expand_dims(line, axis = 0)
+		line = cv2.cvtColor(line, cv2.COLOR_BGR2HSV)
+		line = cv2.inRange(line, HSV_LOW, HSV_HIGH)
+		line = cv2.erode(line, None, iterations=1)
+		line = cv2.dilate(line, None, iterations=1)
+
+		non_masked_pixels = np.count_nonzero(line)
+		nb_pixels.append(non_masked_pixels)
+
+	result = max(nb_pixels)
+	return result
 
 
 def get_diameter_sequence(sequence_dir):
